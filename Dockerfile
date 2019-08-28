@@ -21,10 +21,11 @@ RUN wget -O /tmp/terratest_log_parser https://github.com/gruntwork-io/terratest/
 
 ## Install Terratest dependencies
 RUN mkdir -p $GOPATH/src/terratest/test
+COPY files/Gopkg.lock $GOPATH/src/terratest/test
 COPY files/Gopkg.toml $GOPATH/src/terratest/test
 COPY files/basic_test.go $GOPATH/src/terratest/test
 RUN cd $GOPATH/src/terratest/test; \
-    dep ensure -v
+    dep ensure -v --vendor-only
 
 # Install terraform-compliance
 RUN apk add --no-cache python3
